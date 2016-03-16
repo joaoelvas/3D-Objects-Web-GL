@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="shader_studio.css">
+<script id="vertex-default" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute vec4 vNormal;
+uniform mat4 mProj;
+
+varying vec4 fColor;
+
+void main(){
+    vec4 x = vNormal;
+    gl_Position = mProj * vPosition;
+    gl_Position.z = -gl_Position.z;
+    fColor = vPosition * vNormal;
+}
+</script>
+<script id="fragment-default" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 fColor;
+
+void main() {
+    gl_FragColor =fColor + 0.5 ;
+    // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="shader_studio.js"></script>
+<script type="text/javascript" src="cube.js"></script>
+<script type="text/javascript" src="sphere.js"></script>
+    <script type="text/javascript" src="cylinder.js"></script>
+</head>
+<body>
+  <title>Shader Studio</title>
+    <div id="left">
+    Sombream.:
+        <select id="shading">
+            <option value="Gouraud">Gouraud</option>
+            <option value="Phong">Phong</option>
+        </select>
+        <div>
+            <textarea id="vertex-shader-area" cols="50"></textarea></div>
+        <div>
+          <textarea id="fragment-shader-area" cols="50"></textarea></div>
+        <input type="button" id="shaders" value = "Update"> </input>
+        </div>
+    <div id="right">
+</br>
+        Objeto: 
+        <select id="object">
+            <option value="Cubo">Cubo</option>
+            <option value="Esfera">Esfera</option>
+            <option value="Cilindro" >Cilindro</option>
+        </select>
+    
+        Vista:
+        <select id="projection">
+            <option value="AP">Alçado Principal</option>
+            <option value="Planta">Topo</option>
+            <option value="Perspetiva">Perspetiva</option>
+            <option value="Axonometrica">Axonométrica</option>
+            <option value="Obliqua">Oblíqua</option>
+        </select>
+
+		Preenchimento:
+         <select id="preenchimento">
+            <option value="Wired">Arame</option>
+            <option value="Fill">Cheio</option>
+ 
+        </select>
+</br>
+</br>
+</br>
+        <canvas id="gl-canvas" width="512" height="512"> 
+            Oops... your browser doesn't support the HTML5 canvas element"
+        </canvas>
+</br>   
+        <div id = "newoptions">
+            divisoes: <input type="text" id ="box" value="8" size="2"></input>
+        </div>
+        <div id = "perspectiva">
+</br>
+            Distancia: <input id ="a" type="range" min="1" max="15" value="5" step="1"/>
+            <span id="display_per">5</span>
+        </div>
+        <div id = "L">
+            l: <input type="text" id ="l" value="0.5" size="2"></input>  0<=l<=1
+        </div>
+        <div id = "X">
+            Angulos:
+</br>
+            X: <input id ="x" type="range" min="0" max="360" value="45" step="1"/>
+            <span id="display_X">45</span>
+        </div>
+        <div id = "Y">
+            Y: <input id="y" type="range" min="0" max="360" value="45" step="1">
+            <span id="display_Y">45</span>
+        </div>
+    </div>    
+</body>
+</html>
